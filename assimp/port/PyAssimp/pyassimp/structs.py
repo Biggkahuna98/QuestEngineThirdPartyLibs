@@ -555,6 +555,14 @@ class Bone(Structure):
             #  The maximum value for this member is
             #AI_MAX_BONE_WEIGHTS.
             ("mNumWeights", c_uint),
+            
+            # The bone armature node - used for skeleton conversion
+            # you must enable aiProcess_PopulateArmatureData to populate this
+            ("mArmature", POINTER(Node)),
+            
+            # The bone node in the scene - used for skeleton conversion
+            # you must enable aiProcess_PopulateArmatureData to populate this
+            ("mNode", POINTER(Node)),
 
             #  The vertices affected by this bone
             ("mWeights", POINTER(VertexWeight)),
@@ -831,6 +839,15 @@ class Camera(Structure):
             # 0 if the aspect ratio is not defined in the source file.
             # 0 is also the default value.
             ("mAspect", c_float),
+
+            # Half horizontal orthographic width, in scene units.
+            # The orthographic width specifies the half width of the
+            # orthographic view box. If non-zero the camera is
+            # orthographic and the mAspect should define the ratio
+            # between the orthographic width and height and
+            # mHorizontalFOV should be set to 0.
+            # The default value is 0 (not orthographic).
+            ("mOrthographicWidth", c_float),
         ]
 
 class VectorKey(Structure):
@@ -857,6 +874,9 @@ class QuatKey(Structure):
 
             # The value of this key
             ("mValue", Quaternion),
+
+            # The interpolation setting of this key
+            ("mInterpolation", c_uint32)
         ]
 
 class MeshMorphKey(Structure):
